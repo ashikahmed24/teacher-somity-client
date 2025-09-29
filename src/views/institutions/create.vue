@@ -71,8 +71,10 @@ const loadUpazilas = async () => {
 
 
 const form = reactive({
+    division_id: '',
+    district_id: '',
     upazila_id: '',
-    name: '',
+    name: ' বেঃ প্রাঃ বিঃ',
     phone: '',
     eiin: '',
     established_year: '',

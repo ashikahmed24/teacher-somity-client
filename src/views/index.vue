@@ -95,7 +95,9 @@ onMounted(() => {
                                 <td>{{ division.name }}</td>
                                 <td>{{ division.bn_name }}</td>
                                 <td>{{ division.url }}</td>
-                                <td>4444</td>
+                                <td>
+                                    {{ division.total_institutions }}
+                                </td>
                                 <td>
 
                                     <div class="space-x-2">
