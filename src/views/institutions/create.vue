@@ -78,7 +78,7 @@ const form = reactive({
 const submit = async () => {
     const response = await institutionStore.store(form);
     if (response?.status === 201) {
-        form.name = '';
+        form.name = ' বেঃ প্রাঃ বিঃ';
         form.phone = '';
         form.eiin = '';
         form.established_year = '';
