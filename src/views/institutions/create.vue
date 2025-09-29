@@ -101,8 +101,6 @@ onMounted(() => {
                 <h3 class="card__title">শিক্ষা প্রতিষ্ঠানের তথ্য</h3>
             </div>
 
-            {{ form }}
-
             <div class="card__body">
                 <form @submit.prevent="submit" class="max-w-3xl space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
