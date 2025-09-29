@@ -96,7 +96,7 @@ onMounted(() => {
                                 <td>{{ division.bn_name }}</td>
                                 <td>{{ division.url }}</td>
                                 <td>
-                                    {{ division.total_institutions }}
+                                    {{ division.institutions_count }}
                                 </td>
                                 <td>
 

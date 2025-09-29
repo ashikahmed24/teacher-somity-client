@@ -16,13 +16,6 @@ const institutionStore = useInstitutionStore();
 
 const { errors } = storeToRefs(institutionStore);
 
-const search = reactive({
-    division_id: "",
-    district_id: "",
-    upazila_id: "",
-    institution_id: "",
-});
-
 const divisionOptions = ref([]);
 const districtOptions = ref([]);
 const upazilaOptions = ref([]);
@@ -38,35 +31,35 @@ const loadDivisions = async () => {
 
 // Load Districts (by division_id)
 const loadDistricts = async () => {
-    if (!search.division_id) {
+    if (!form.division_id) {
         districtOptions.value = [];
         upazilaOptions.value = [];
         return;
     }
-    const { data } = await divisionStore.districts(search.division_id);
+    const { data } = await divisionStore.districts(form.division_id);
     districtOptions.value = data.map(district => ({
         label: district.name,
         value: district.id,
     }));
 
-    search.district_id = "";
-    search.upazila_id = "";
+    form.district_id = "";
+    form.upazila_id = "";
     upazilaOptions.value = [];
 };
 
 // Load Upazilas (by district_id)
 const loadUpazilas = async () => {
-    if (!search.district_id) {
+    if (!form.district_id) {
         upazilaOptions.value = [];
         return;
     }
-    const { data } = await districtStore.upazilas(search.district_id);
+    const { data } = await districtStore.upazilas(form.district_id);
     upazilaOptions.value = data.map(upazila => ({
         label: upazila.name,
         value: upazila.id,
     }));
 
-    search.upazila_id = "";
+    form.upazila_id = "";
 };
 
 
@@ -108,13 +101,15 @@ onMounted(() => {
                 <h3 class="card__title">শিক্ষা প্রতিষ্ঠানের তথ্য</h3>
             </div>
 
+            {{ form }}
+
             <div class="card__body">
                 <form @submit.prevent="submit" class="max-w-3xl space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <BaseSelect label="বিভাগ" :options="divisionOptions" v-model="search.division_id"
+                        <BaseSelect label="বিভাগ" :options="divisionOptions" v-model="form.division_id"
                             @change="loadDistricts" :error="errors.division_id" :required="true" />
 
-                        <BaseSelect label="জেলা" :options="districtOptions" v-model="search.district_id"
+                        <BaseSelect label="জেলা" :options="districtOptions" v-model="form.district_id"
                             @change="loadUpazilas" :error="errors.district_id" :required="true" />
 
                         <BaseSelect label="উপজেলা" :options="upazilaOptions" v-model="form.upazila_id"
@@ -123,13 +118,13 @@ onMounted(() => {
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <BaseInput label="Name" v-model="form.name" :error="errors.name" :required="true" />
-                        <BaseInput label="Phone" v-model="form.phone" :error="errors.phone" />
-                        <BaseInput label="EIIN" v-model="form.eiin" :error="errors.eiin" />
+                        <!-- <BaseInput label="Phone" v-model="form.phone" :error="errors.phone" />
+                        <BaseInput label="EIIN" v-model="form.eiin" :error="errors.eiin" /> -->
                         <BaseInput label="Established Year" v-model="form.established_year"
                             :error="errors.established_year" type="number" />
                     </div>
 
-                    <BaseInput label="Address" v-model="form.address" :error="errors.address" />
+                    <!-- <BaseInput label="Address" v-model="form.address" :error="errors.address" /> -->
 
                     <BaseButton :loading="institutionStore.loading" class="w-full">Submit</BaseButton>
 
