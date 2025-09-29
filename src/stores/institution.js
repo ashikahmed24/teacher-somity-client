@@ -35,7 +35,7 @@ export const useInstitutionStore = defineStore("institution", {
         );
         if (response.status === 201) {
           toastStore.success(response.data.message);
-          return Promise.resolve(response.data);
+          return Promise.resolve(response);
         }
       } catch (error) {
         if (error.response) {
@@ -93,7 +93,8 @@ export const useInstitutionStore = defineStore("institution", {
           `/api/institutions/${institution}`
         );
         if (response.status === 200) {
-          return Promise.resolve(response.data);
+          toastStore.success(response.data.message);
+          return Promise.resolve(response);
         }
       } catch (error) {
         if (error.response) {

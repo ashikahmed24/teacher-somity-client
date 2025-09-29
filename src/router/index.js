@@ -47,9 +47,9 @@ const router = createRouter({
     },
 
     {
-      path: "/institutions/:id/show",
-      name: "institutions.show",
-      component: () => import("../views/institutions/show.vue"),
+      path: "/institutions/:id/edit",
+      name: "institutions.edit",
+      component: () => import("../views/institutions/edit.vue"),
     },
   ],
 });

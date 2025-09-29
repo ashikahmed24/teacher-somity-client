@@ -53,72 +53,80 @@
     border-radius: 10px;
   }
 
+  /* Base badge */
   .badge {
-    @apply px-2 py-0.5 rounded cursor-pointer;
+    @apply relative inline-flex items-center pl-5 pr-2 py-1 rounded-full text-xs font-medium cursor-pointer;
+  }
+
+  .badge::before {
+    content: "";
+    @apply w-1 h-1 rounded-full absolute;
+    left: 0.5rem; /* dot position */
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .badge__primary {
-    @apply bg-primary text-white;
+    @apply bg-primary/10 text-primary;
   }
 
-  .badge__info {
-    @apply bg-blue-100 text-blue-500;
+  .badge__primary::before {
+    @apply bg-primary;
   }
 
   .badge__success {
-    @apply bg-green-100 text-green-500;
+    @apply bg-green-100 text-green-700;
   }
 
-  .badge__danger {
-    @apply bg-red-100 text-red-500;
+  .badge__success::before {
+    @apply bg-green-500;
+  }
+
+  .badge__info {
+    @apply bg-blue-100 text-blue-700;
+  }
+
+  .badge__info::before {
+    @apply bg-blue-500;
   }
 
   .badge__warning {
-    @apply bg-yellow-100 text-yellow-500;
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  .badge__warning::before {
+    @apply bg-yellow-500;
+  }
+
+  .badge__danger {
+    @apply bg-red-100 text-red-700;
+  }
+  .badge__danger::before {
+    @apply bg-red-500;
   }
 
   table {
     @apply min-w-full;
   }
 
-  thead {
-    @apply bg-gray-50 text-sm capitalize;
+  table {
+    @apply min-w-max w-full divide-y divide-gray-200;
   }
 
   thead th {
-    @apply py-3 font-semibold text-sm text-left whitespace-nowrap capitalize;
+    @apply px-4 py-2 text-start text-sm whitespace-nowrap font-medium text-title capitalize;
   }
 
   tbody {
-    @apply text-gray-700;
+    @apply divide-y divide-border;
   }
 
   tbody tr {
-    @apply bg-white border-b border-border border-dashed;
+    @apply odd:bg-white even:bg-gray-100;
   }
 
   tbody td {
-    @apply py-2 text-sm whitespace-nowrap space-y-2;
-  }
-
-  tbody td:first-child {
-    @apply font-bold;
-  }
-
-  tfoot {
-    @apply text-sm capitalize;
-  }
-
-  tfoot tr {
-    @apply text-left whitespace-nowrap capitalize;
-  }
-
-  tfoot th {
-    @apply px-3 py-2 font-semibold text-sm;
-  }
-
-  tfoot td {
-    @apply p-3 font-bold text-sm text-left whitespace-nowrap capitalize;
+    @apply px-4 py-2 whitespace-nowrap text-sm font-normal text-body;
   }
 
   .nav__item {
