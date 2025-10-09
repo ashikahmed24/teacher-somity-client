@@ -10,7 +10,9 @@ import BaseInput from '@/components/BaseInput.vue';
 import { useInstitutionStore } from '@/stores/institution';
 import { storeToRefs } from 'pinia';
 import BaseButton from '@/components/BaseButton.vue';
+import { useToastStore } from '@/stores/toast';
 
+const toastStore = useToastStore();
 const divisionStore = useDivisionStore();
 const districtStore = useDistrictStore();
 const upazilaStore = useUpazilaStore();
@@ -98,7 +100,34 @@ const viewDialog = (institution) => {
 }
 const editDialog = (institution) => {
     selectedInstitution.value = institution;
+
+    // update reactive object values
+    update.name = institution.name || '';
+    update.phone = institution.phone || '';
+    update.established_year = institution.established_year || '';
+    update.land_area = institution.land_area || '';
+    update.eiin = institution.eiin || '';
+    update.address = institution.address || '';
+
     showEditDialog.value = true;
+}
+
+const update = reactive({
+    name: '',
+    phone: '',
+    established_year: '',
+    land_area: '',
+    eiin: '',
+    address: '',
+});
+
+const onUpdate = async () => {
+    const response = await institutionStore.update(selectedInstitution.value.id, update);
+    console.log(response);
+    if (response.status === 200) {
+        showEditDialog.value = false;
+        toastStore.success(response.data.message);
+    }
 }
 
 const deleteInstitution = async (institution) => {
@@ -124,6 +153,7 @@ onMounted(() => {
                 <h3 class="card__title">শিক্ষা প্রতিষ্ঠানের তথ্য</h3>
                 <RouterLink :to="{ name: 'institutions.create' }" class="base__button">যোগ করি</RouterLink>
             </div>
+
 
             <div class="card__body">
                 <form class="w-full mb-4">
@@ -155,8 +185,8 @@ onMounted(() => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="institution in institutions" :key="institution.id">
-                                    <td>{{ institution.id }}</td>
+                                <tr v-for="(institution, index) in institutions" :key="institution.id">
+                                    <td>{{ index + 1 }}</td>
                                     <td>{{ institution.name }}</td>
                                     <td>{{ institution.phone || '-' }}</td>
                                     <td>{{ institution.established_year || '-' }}</td>
@@ -221,9 +251,21 @@ onMounted(() => {
 
         <!-- Edit Dialog -->
         <BaseDialog :show="showEditDialog" size="max-w-2xl" title="Edit Institution" @close="showEditDialog = false">
-            <div class="p-4">
-                <p>Edit form for <strong>{{ selectedInstitution?.name }}</strong> goes here.</p>
-            </div>
+            <form @submit.prevent="onUpdate">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <BaseInput label="Name" v-model="update.name" :required="true" :error="errors.name" />
+                    <BaseInput label="Phone" v-model="update.phone" :required="true" :error="errors.phone" />
+                    <BaseInput label="Established Year" v-model="update.established_year" :required="true"
+                        :error="errors.established_year" />
+                    <BaseInput label="Land Area" type="number" v-model="update.land_area" :required="true"
+                        :error="errors.land_area" />
+                    <BaseInput label="EIIN" v-model="update.eiin" :required="true" :error="errors.eiin" />
+                    <BaseInput label="Address" v-model="update.address" :required="true" :error="errors.address" />
+                </div>
+
+                <BaseButton :loading="institutionStore.loading" class="w-full">Submit</BaseButton>
+
+            </form>
         </BaseDialog>
 
     </Default>

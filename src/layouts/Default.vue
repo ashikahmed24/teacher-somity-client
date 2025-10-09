@@ -81,7 +81,7 @@ const logout = () => {
             <!-- Header -->
             <header class="bg-white sticky top-0 z-30 px-4 py-3 flex items-center justify-between">
                 <!-- Hamburger Menu -->
-                <button type="button" class="cursor-pointer md:hidden" @click="sidebarOpen = !sidebarOpen">
+                <button type="button" class="cursor-pointer" @click="sidebarOpen = !sidebarOpen">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="size-6">
                         <path stroke-linecap="round" stroke-linejoin="round"

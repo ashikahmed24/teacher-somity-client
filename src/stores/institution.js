@@ -74,12 +74,12 @@ export const useInstitutionStore = defineStore("institution", {
           formData
         );
         if (response.status === 200) {
-          return Promise.resolve(response.data);
+          return Promise.resolve(response);
         }
       } catch (error) {
         if (error.response) {
           this.errors = error.response.data.errors;
-          return Promise.reject(error.response.data);
+          return Promise.reject(error.response);
         }
       } finally {
         this.loading = false;
