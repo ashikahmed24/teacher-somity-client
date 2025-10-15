@@ -23,7 +23,7 @@ const logout = () => console.log("Logged out!");
             'w-60 flex flex-col fixed top-0 bottom-0 z-40 bg-white transition-transform duration-300 ',
             sidebarOpen ? 'translate-x-0' : '-translate-x-60 md:translate-x-0'
         ]">
-            <!-- Header -->
+            <!-- logo -->
             <div class="flex items-center gap-2 px-2 py-3 border-b border-border">
                 <img src="/logo.png" class="h-10 w-auto" />
                 <span class="font-bold text-sm leading-tight">বাংলাদেশ বেসরকারী<br />শিক্ষক সমিতি</span>
@@ -76,13 +76,22 @@ const logout = () => console.log("Logged out!");
             <!-- Header -->
             <header
                 class="bg-white sticky top-0 z-30 px-4 py-3 flex items-center justify-between border-b border-border">
-                <button type="button" class="cursor-pointer md:hidden" @click="sidebarOpen = !sidebarOpen">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
-                    </svg>
-                </button>
+                <div class="flex items-center gap-4">
+                    <button type="button" class="cursor-pointer" @click="sidebarOpen = !sidebarOpen">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
+                        </svg>
+                    </button>
+
+                    <!-- logo -->
+                    <div class="md:hidden inline-flex items-center gap-2">
+                        <img src="/logo.png" class="h-10 w-auto" />
+                        <span class="font-bold text-sm leading-tight">বাংলাদেশ বেসরকারী<br />শিক্ষক সমিতি</span>
+                    </div>
+                </div>
+
 
                 <div class="flex items-center gap-3">
                     <img src="/profile.png" alt="Profile" class="w-10 h-10 rounded-full" />
