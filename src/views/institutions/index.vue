@@ -240,12 +240,12 @@ onMounted(() => {
         <!-- View Dialog -->
         <BaseDialog :show="showViewDialog" title="View Institution" @close="showViewDialog = false">
             <div class="p-4">
-                <p><strong>Name:</strong> {{ selectedInstitution?.name }}</p>
-                <p><strong>Phone:</strong> {{ selectedInstitution?.phone }}</p>
-                <p><strong>Established Year:</strong> {{ selectedInstitution?.established_year }}</p>
-                <p><strong>Land Area:</strong> {{ selectedInstitution?.land_area }}</p>
+                <p><strong>বিদ্যালয়ের নাম:</strong> {{ selectedInstitution?.name }}</p>
+                <p><strong>মোবাইল:</strong> {{ selectedInstitution?.phone }}</p>
+                <p><strong>প্রতিষ্ঠার সাল:</strong> {{ selectedInstitution?.established_year }}</p>
+                <p><strong>জমির পরিমান:</strong> {{ selectedInstitution?.land_area }}</p>
                 <p><strong>EIIN:</strong> {{ selectedInstitution?.eiin }}</p>
-                <p><strong>Address:</strong> {{ selectedInstitution?.address }}</p>
+                <p><strong>ঠিকানা:</strong> {{ selectedInstitution?.address }}</p>
             </div>
         </BaseDialog>
 
@@ -253,14 +253,14 @@ onMounted(() => {
         <BaseDialog :show="showEditDialog" size="max-w-2xl" title="Edit Institution" @close="showEditDialog = false">
             <form @submit.prevent="onUpdate">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <BaseInput label="Name" v-model="update.name" :required="true" :error="errors.name" />
-                    <BaseInput label="Phone" v-model="update.phone" :required="true" :error="errors.phone" />
-                    <BaseInput label="Established Year" v-model="update.established_year" :required="true"
+                    <BaseInput label="বিদ্যালয়ের নাম" v-model="update.name" :required="true" :error="errors.name" />
+                    <BaseInput label="মোবাইল" v-model="update.phone" :required="true" :error="errors.phone" />
+                    <BaseInput label="প্রতিষ্ঠার সাল" v-model="update.established_year" :required="true"
                         :error="errors.established_year" />
-                    <BaseInput label="Land Area" type="number" v-model="update.land_area" :required="true"
+                    <BaseInput label="জমির পরিমান" type="number" v-model="update.land_area" :required="true"
                         :error="errors.land_area" />
                     <BaseInput label="EIIN" v-model="update.eiin" :required="true" :error="errors.eiin" />
-                    <BaseInput label="Address" v-model="update.address" :required="true" :error="errors.address" />
+                    <BaseInput label="ঠিকানা" v-model="update.address" :required="true" :error="errors.address" />
                 </div>
 
                 <BaseButton :loading="institutionStore.loading" class="w-full">Submit</BaseButton>
