@@ -26,58 +26,48 @@ const search = reactive({
     upazila_id: "",
 });
 
-const divisionOptions = ref([]);
-const districtOptions = ref([]);
-const upazilaOptions = ref([]);
+const divisions = ref([]);
+const districts = ref([]);
+const upazilas = ref([]);
 const institutions = ref([]);
 
 // Dialog visibility
-const showAddDialog = ref(false);
 const showViewDialog = ref(false);
 const showEditDialog = ref(false);
 const selectedInstitution = ref(null);
 
 // Load Divisions
 const loadDivisions = async () => {
-    const { data } = await divisionStore.dropdown();
-    divisionOptions.value = data.map(division => ({
-        label: division.name,
-        value: division.id,
-    }));
+    const response = await divisionStore.dropdown();
+    divisions.value = response.data;
 };
 
 // Load Districts (by division_id)
 const loadDistricts = async () => {
     if (!search.division_id) {
-        districtOptions.value = [];
-        upazilaOptions.value = [];
+        districts.value = [];
+        upazilas.value = [];
         institutions.value = [];
         return;
     }
-    const { data } = await divisionStore.districts(search.division_id);
-    districtOptions.value = data.map(district => ({
-        label: district.name,
-        value: district.id,
-    }));
+    const response = await divisionStore.districts(search.division_id);
+    districts.value = response.data;
 
     search.district_id = "";
     search.upazila_id = "";
     institutions.value = [];
-    upazilaOptions.value = [];
+    upazilas.value = [];
 };
 
 // Load Upazilas (by district_id)
 const loadUpazilas = async () => {
     if (!search.district_id) {
-        upazilaOptions.value = [];
+        upazilas.value = [];
         institutions.value = [];
         return;
     }
-    const { data } = await districtStore.upazilas(search.district_id);
-    upazilaOptions.value = data.map(upazila => ({
-        label: upazila.name,
-        value: upazila.id,
-    }));
+    const response = await districtStore.upazilas(search.district_id);
+    upazilas.value = response.data;
 
     search.upazila_id = "";
     institutions.value = [];
@@ -89,8 +79,8 @@ const loadInstitutions = async () => {
         institutions.value = [];
         return;
     }
-    const { data } = await upazilaStore.institutions(search.upazila_id);
-    institutions.value = data;
+    const response = await upazilaStore.institutions(search.upazila_id);
+    institutions.value = response.data;
 };
 
 // Dialog functions
@@ -123,11 +113,14 @@ const update = reactive({
 
 const onUpdate = async () => {
     const response = await institutionStore.update(selectedInstitution.value.id, update);
-    console.log(response);
+
     if (response.status === 200) {
         showEditDialog.value = false;
         toastStore.success(response.data.message);
+
+        await loadInstitutions();
     }
+
 }
 
 const deleteInstitution = async (institution) => {
@@ -136,9 +129,6 @@ const deleteInstitution = async (institution) => {
     }
     loadInstitutions();
 }
-
-
-
 
 // Initial Load
 onMounted(() => {
@@ -158,19 +148,27 @@ onMounted(() => {
             <div class="card__body">
                 <form class="w-full mb-4">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <BaseSelect label="বিভাগ" :options="divisionOptions" v-model="search.division_id"
-                            @change="loadDistricts" />
-                        <BaseSelect label="জেলা" :options="districtOptions" v-model="search.district_id"
-                            @change="loadUpazilas" />
-                        <BaseSelect label="উপজেলা" :options="upazilaOptions" v-model="search.upazila_id" />
+
+                        <BaseSelect label="বিভাগ" :options="divisions.map(division => ({
+                            label: division.bn_name,
+                            value: division.id
+                        }))" v-model="search.division_id" @change="loadDistricts" />
+
+                        <BaseSelect label="জেলা" :options="districts.map(district => ({
+                            label: district.bn_name,
+                            value: district.id
+                        }))" v-model="search.district_id" @change="loadUpazilas" />
+
+                        <BaseSelect label="উপজেলা" :options="upazilas.map(upazila => ({
+                            label: upazila.bn_name,
+                            value: upazila.id
+                        }))" v-model="search.upazila_id" />
                     </div>
                     <button type="button" @click="loadInstitutions"
                         class="base__button cursor-pointer w-full mt-3">সাবমিট
                         করুন</button>
                 </form>
-
-                <div class="py-8">
-                    <!-- Institutions Table -->
+                <div class="w-full overflow-x-auto">
                     <template v-if="institutions.length > 0">
                         <table>
                             <thead>
@@ -232,8 +230,10 @@ onMounted(() => {
                         </div>
                     </template>
                 </div>
+
             </div>
         </div>
+
 
 
 

@@ -11,7 +11,7 @@ const { errors } = storeToRefs(authStore);
 
 const form = reactive({
     email: 'info@ashikahmed.net',
-    password: 'password',
+    password: '',
 });
 
 

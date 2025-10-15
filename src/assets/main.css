@@ -41,11 +41,9 @@
   }
 
   .scrollbar:hover::-webkit-scrollbar-track {
-    background: linear-gradient(
-      0deg,
-      rgb(220, 200, 246) 0%,
-      rgb(216, 216, 255) 100%
-    );
+    background: linear-gradient(0deg,
+        rgb(220, 200, 246) 0%,
+        rgb(216, 216, 255) 100%);
   }
 
   .scrollbar:hover::-webkit-scrollbar-thumb {
@@ -61,7 +59,8 @@
   .badge::before {
     content: "";
     @apply w-1 h-1 rounded-full absolute;
-    left: 0.5rem; /* dot position */
+    left: 0.5rem;
+    /* dot position */
     top: 50%;
     transform: translateY(-50%);
   }
@@ -101,6 +100,7 @@
   .badge__danger {
     @apply bg-red-100 text-red-700;
   }
+
   .badge__danger::before {
     @apply bg-red-500;
   }
@@ -218,7 +218,7 @@
   }
 
   .card__body {
-    @apply p-6 text-gray-700 overflow-x-auto;
+    @apply p-6 text-gray-700;
   }
 
   .link__active {
@@ -247,12 +247,10 @@
     @apply absolute top-0 h-full;
     left: -75%;
     width: 50%;
-    background: linear-gradient(
-      120deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.4) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    background: linear-gradient(120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%);
     transform: skewX(-25deg);
     z-index: 10;
     pointer-events: none;
